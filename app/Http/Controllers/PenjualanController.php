@@ -7,6 +7,7 @@ use App\Models\Penjualan;
 use App\Models\DetailPenjualan;
 use App\Models\Barang;
 use App\Models\Pelanggan;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -112,20 +113,33 @@ class PenjualanController extends Controller
 
     public function getChartData()
     {
+        $startDate = Carbon::now()->subDays(30);
+        $endDate = Carbon::now();
+
+        // Ambil data dari database
         $data = Penjualan::select(
             DB::raw('DATE(tgl_faktur) as tanggal'),
             DB::raw('COUNT(*) as jumlah_transaksi'),
             DB::raw('SUM(total_bayar) as total_pendapatan')
         )
+            ->whereBetween('tgl_faktur', [$startDate, $endDate])
             ->groupBy('tanggal')
             ->orderBy('tanggal', 'ASC')
             ->get();
 
-        // Debugging: Cek apakah data ada
-        if ($data->isEmpty()) {
-            return response()->json(['message' => 'Tidak ada data transaksi'], 200);
-        }
+        // Debugging: Cek apakah query berhasil mengambil data
 
         return response()->json($data);
+    }
+
+    public function jumlahTransaksi()
+    {
+        $jumlahTransaksi = Penjualan::count();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Jumlah transaksi penjualan',
+            'data' => $jumlahTransaksi
+        ]);
     }
 }

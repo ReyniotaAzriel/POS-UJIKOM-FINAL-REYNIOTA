@@ -39,16 +39,12 @@ class PelangganController extends Controller
         return redirect('/pelanggan')->with('success', 'Pelanggan berhasil ditambahkan.');
     }
 
-    public function show($id)
-    {
-        $pelanggan = Pelanggan::findOrFail($id);
-        return view('pelanggan.show', compact('pelanggan'));
-    }
+
 
     public function edit($id)
     {
         $pelanggan = Pelanggan::findOrFail($id);
-        return view('pelanggan.edit', compact('pelanggan'));
+        return view('admin.pelanggan.edit', compact('pelanggan'));
     }
 
     public function update(Request $request, $id)

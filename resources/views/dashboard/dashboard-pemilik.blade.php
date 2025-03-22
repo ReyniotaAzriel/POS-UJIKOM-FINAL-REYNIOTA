@@ -30,25 +30,37 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        var ctx = document.getElementById('chartLaporan').getContext('2d');
-        var chartLaporan = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: @json($penjualanPerBulan->pluck('bulan')),
-                datasets: [{
-                        label: 'Pemasukan',
-                        data: @json($penjualanPerBulan->pluck('total')),
-                        borderColor: 'green',
-                        fill: false
-                    },
-                    {
-                        label: 'Pengeluaran',
-                        data: @json($pembelianPerBulan->pluck('total')),
-                        borderColor: 'red',
-                        fill: false
-                    }
-                ]
+    var ctx = document.getElementById('chartLaporan').getContext('2d');
+    var chartLaporan = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: @json($penjualanPerBulan->pluck('bulan')),
+            datasets: [
+                {
+                    label: 'Pemasukan',
+                    data: @json($penjualanPerBulan->pluck('total')),
+                    backgroundColor: 'rgba(0, 200, 81, 0.6)',  // Hijau
+                    borderColor: 'rgba(0, 150, 50, 1)',
+                    borderWidth: 2
+                },
+                {
+                    label: 'Pengeluaran',
+                    data: @json($pembelianPerBulan->pluck('total')),
+                    backgroundColor: 'rgba(0, 123, 255, 0.6)', // Biru
+                    borderColor: 'rgba(0, 80, 200, 1)',
+                    borderWidth: 2
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
             }
-        });
-    </script>
+        }
+    });
+</script>
+
 @endsection

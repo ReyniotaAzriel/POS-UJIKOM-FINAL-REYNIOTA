@@ -103,6 +103,8 @@ Route::middleware(['auth'])->group(function () {
         //chart
         Route::get('/admin/penjualan/chart', [PenjualanController::class, 'getChartData']);
 
+        //card
+
 
         //export
         Route::get('/export-excel', function () {

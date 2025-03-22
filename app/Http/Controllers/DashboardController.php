@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Kategori;
 use App\Models\Pembelian;
 use App\Models\Penjualan;
+use App\Models\User;
+use App\Models\Barang;
+use App\Models\Pemasok;
 use App\Models\Pelanggan;
 use Illuminate\Http\Request;
 
@@ -12,6 +15,7 @@ class DashboardController extends Controller
 {
     public function admin()
     {
+        // 'totalBarang' => Barang::count();
         return view('dashboard.dashboard-admin');
     }
 
@@ -48,4 +52,6 @@ class DashboardController extends Controller
 
         return view('dashboard.dashboard-pemilik', compact('totalPemasukan', 'totalPengeluaran', 'penjualanPerBulan', 'pembelianPerBulan'));
     }
+
+
 }
